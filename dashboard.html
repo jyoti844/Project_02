@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farm Production Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+    .navbar-brand {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">AGRIGOAL</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact.html">Contact Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Services
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Online</a></li>
+              <li><a class="dropdown-item" href="#">Offline</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">cash</a></li>
+              <li><a class="dropdown-item" href="#">OTHER</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Crops & Season.html">Dashboard</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-danger mx-1">Login</button>
+          <button class="btn btn-danger">SignUp</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid d-flex justify-content-center align-items-center">
+      <a class="navbar-brand  " href="#">*Dashboard*</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Crop Yield Chart -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            Crop Yield Over Time
+          </div>
+          <div class="card-body">
+            <canvas id="cropYieldChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- Soil Moisture Chart -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            Soil Moisture Levels
+          </div>
+          <div class="card-body">
+            <canvas id="soilMoistureChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Temperature Chart -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-warning text-white">
+            Temperature Trends
+          </div>
+          <div class="card-body">
+            <canvas id="temperatureChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js Scripts -->
+  <script>
+    // Crop Yield Chart
+    const ctxCrop = document.getElementById('cropYieldChart').getContext('2d');
+    const cropYieldChart = new Chart(ctxCrop, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Crop Yield (kg)',
+          data: [500, 700, 800, 600, 750, 900],
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Monthly Crop Yield'
+          }
+        }
+      }
+    });
+
+    // Soil Moisture Chart
+    const ctxSoil = document.getElementById('soilMoistureChart').getContext('2d');
+    const soilMoistureChart = new Chart(ctxSoil, {
+      type: 'bar',
+      data: {
+        labels: ['Field A', 'Field B', 'Field C', 'Field D'],
+        datasets: [{
+          label: 'Soil Moisture (%)',
+          data: [45, 50, 40, 55],
+          backgroundColor: 'rgba(23, 162, 184, 0.7)',
+          borderColor: 'rgba(23, 162, 184, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Soil Moisture by Field'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Temperature Chart
+    const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
+    const temperatureChart = new Chart(ctxTemp, {
+      type: 'line',
+      data: {
+        labels: ['6 AM', '9 AM', '12 PM', '3 PM', '6 PM'],
+        datasets: [{
+          label: 'Temperature (°C)',
+          data: [20, 24, 28, 26, 22],
+          backgroundColor: 'rgba(255, 193, 7, 0.2)',
+          borderColor: 'rgba(255, 193, 7, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Daily Temperature Variation'
+          }
+        }
+      }
+    });
+  </script>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
